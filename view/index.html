@@ -21,8 +21,8 @@
       '/var/log/nova/nova-consoleauth.log',
       '/var/log/nova/nova-scheduler.log'];
 
-    // var socket = io.connect('http://10.1.18.56:3000');
-    var socket = io.connect('http://127.0.0.1:3000');
+    var socket = io.connect('http://10.1.18.56:3000');
+    // var socket = io.connect('http://127.0.0.1:3000');
     socket.emit('filename', logMap[0]);
     socket.on(logMap[0], function (data) {
       console.log(data);
