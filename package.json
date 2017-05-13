@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.15.2",
-    "socket.io": "^2.0.1"
+    "node-ssh": "^4.2.2",
+    "socket.io": "^2.0.1",
+    "ssh-exec": "^2.0.0"
   }
 }
