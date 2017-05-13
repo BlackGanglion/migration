@@ -5,36 +5,27 @@
   <title></title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="./index.css" rel="stylesheet">
 </head>
+
 <body>
   <div className="log">
     <h1>10.1.18.56 /var/log/nova/nova-api.log</h1>
-    <div id="content">
-    </div>
-  </div>
-  <script src="https://cdn.bootcss.com/socket.io/1.7.4/socket.io.min.js"></script>
-  <script>
-    const path = '/var/log/nova/';
-    const logMap = [
-      // './test.log',
-      '/var/log/nova/nova-api.log',
-      '/var/log/nova/nova-manage.log',
-      '/var/log/nova/nova-cert.log',     
-      '/var/log/nova/nova-conductor.log',
-      '/var/log/nova/nova-novncproxy.log',
-      '/var/log/nova/nova-compute.log',
-      '/var/log/nova/nova-consoleauth.log',
-      '/var/log/nova/nova-scheduler.log'];
-    var socket = io.connect('http://10.1.18.56:3000');
-    // var socket = io.connect('http://127.0.0.1:3000');
-    socket.emit('filename', logMap[0]);
-    socket.on(logMap[0], function (data) {
-      var element = document.getElementById('content');
-      var para = document.createElement("p");
-      var node = document.createTextNode(data);
-      para.appendChild(node);
-      element.appendChild(para);
-    });
-  </script>
+    <div id="content/var/log/nova/nova-api.log"></div>
+    <h1>10.1.18.56 /var/log/nova/nova-manage.log</h1>
+    <div id="content/var/log/nova/nova-manage.log"></div>
+    <h1>10.1.18.56 /var/log/nova/nova-cert.log</h1>
+    <div id="content/var/log/nova/nova-cert.log"></div>
+    <h1>10.1.18.56 /var/log/nova/nova-novncproxy.log</h1>
+    <div id="content/var/log/nova/nova-novncproxy.log"></div>
+    <h1>10.1.18.56 /var/log/nova/nova-compute.log</h1>
+    <div id="content/var/log/nova/nova-compute.log"></div>
+    <h1>10.1.18.56/var/log/nova/nova-consoleauth.log</h1>
+    <div id="content/var/log/nova/nova-consoleauth.log"></div>
+    <h1>10.1.18.56/var/log/nova/nova-scheduler.log</h1>
+    <div id="content/var/log/nova/nova-scheduler.log"></div>
+    <script src="https://cdn.bootcss.com/socket.io/1.7.4/socket.io.min.js"></script>
+    <script src="./index.js"></script>
 </body>
+
 </html>
