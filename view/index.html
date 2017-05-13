@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <script src="https://cdn.bootcss.com/socket.io/1.7.4/socket.io.min.js"></script>
+  <script>
+    var socket = io.connect('http://127.0.0.1:3000');
+    socket.emit('filename', './test.log');
+    socket.on('./test.log', function (data) {
+      console.log(data);
+    });
+  </script>
+</body>
+</html>
