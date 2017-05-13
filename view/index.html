@@ -9,9 +9,22 @@
 <body>
   <script src="https://cdn.bootcss.com/socket.io/1.7.4/socket.io.min.js"></script>
   <script>
+    const path = '/var/log/nova/';
+    const logMap = [
+      // './test.log',
+      '/var/log/nova/nova-api.log',
+      '/var/log/nova/nova-manage.log',
+      '/var/log/nova/nova-cert.log',     
+      '/var/log/nova/nova-conductor.log',
+      '/var/log/nova/nova-novncproxy.log',
+      '/var/log/nova/nova-compute.log',
+      '/var/log/nova/nova-consoleauth.log',
+      '/var/log/nova/nova-scheduler.log'];
+
+    // var socket = io.connect('http://10.1.18.56:3000');
     var socket = io.connect('http://127.0.0.1:3000');
-    socket.emit('filename', './test.log');
-    socket.on('./test.log', function (data) {
+    socket.emit('filename', logMap[0]);
+    socket.on(logMap[0], function (data) {
       console.log(data);
     });
   </script>

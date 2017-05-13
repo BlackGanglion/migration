@@ -40,10 +40,12 @@ exports.tailf = function (filename, onError, onData) {
             }
           });
       };
+      
       loop();
 
       // 监听文件变化，如果收到 change 事件则尝试读取文件内容
       fs.watch(filename, (event, filename) => {
+        console.log(filename + ': change');
         if (event === 'change') {
           loop();
         }
