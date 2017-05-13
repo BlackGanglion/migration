@@ -7,6 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+  <div className="log">
+    <h1>10.1.18.56 /var/log/nova/nova-api.log</h1>
+    <div id="content">
+    </div>
+  </div>
   <script src="https://cdn.bootcss.com/socket.io/1.7.4/socket.io.min.js"></script>
   <script>
     const path = '/var/log/nova/';
@@ -20,12 +25,15 @@
       '/var/log/nova/nova-compute.log',
       '/var/log/nova/nova-consoleauth.log',
       '/var/log/nova/nova-scheduler.log'];
-
     var socket = io.connect('http://10.1.18.56:3000');
     // var socket = io.connect('http://127.0.0.1:3000');
     socket.emit('filename', logMap[0]);
     socket.on(logMap[0], function (data) {
-      console.log(data);
+      var element = document.getElementById('content');
+      var para = document.createElement("p");
+      var node = document.createTextNode(data);
+      para.appendChild(node);
+      element.appendChild(para);
     });
   </script>
 </body>

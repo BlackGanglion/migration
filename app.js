@@ -14,6 +14,7 @@ io.on('connection', function (client) {
       console.log('err: ' + err);
     }, data => {
       client.emit(filename, data);
+      console.log("emit");
     });
   });
 });
