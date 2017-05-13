@@ -21,7 +21,7 @@ exports.tailf = function (filename, onError, onData) {
       if (err) return onError(err);
 
       // 文件开始位置
-      let position = 0;
+      let position = stats.size;
       // 循环读取
       const loop = () => {
         const buf = new Buffer(CHUNK_SIZE);
@@ -40,7 +40,7 @@ exports.tailf = function (filename, onError, onData) {
             }
           });
       };
-      
+
       loop();
 
       // 监听文件变化，如果收到 change 事件则尝试读取文件内容
