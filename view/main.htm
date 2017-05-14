@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)http://10.65.7.11/dashboard/admin/instances/ -->
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <style type="text/css">
+    @charset "UTF-8";
+    [ng\:cloak],
+    [ng-cloak],
+    [data-ng-cloak],
+    [x-ng-cloak],
+    .ng-cloak,
+    .x-ng-cloak,
+    .ng-hide:not(.ng-hide-animate) {
+      display: none !important;
+    }
+
+    ng\:form {
+      display: block;
+    }
+  </style>
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+
+
+  <title>云主机 - OpenStack Dashboard</title>
+
+
+
+
+
+  <link rel="stylesheet" href="./static/34f8a8f8d5e5.css" type="text/css" media="screen">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="./static/f3e16c56e573.css" type="text/css">
+  <link rel="stylesheet" href="./main.css" type="text/css">
+
+
+  <link rel="shortcut icon" href="http://10.65.7.11/dashboard/static/dashboard/img/favicon.ico">
+
+
+
+
+
+  <script type="text/javascript" charset="utf-8">
+    if (self === top) {
+      var antiClickjack = document.getElementById("anti-clickjack");
+      antiClickjack.parentNode.removeChild(antiClickjack);
+    } else {
+      top.location = self.location;
+    }
+  </script>
+
+
+
+
+
+
+
+  <script type="text/javascript" src="./static/7fd3f7d69c71.js"></script>
+
+  <script type="text/javascript" charset="utf-8">
+    (function (global) {
+      'use strict';
+
+      // make translation info available on client
+      horizon.languageCode = 'zh-cn';
+      horizon.languageBidi = 'False';
+      horizon.datepickerLocale = 'zh-CN';
+
+      /* Load angular modules extensions list before we include angular/horizon.js */
+      global.horizonPlugInModules = ['horizon.dashboard.project', 'horizon.dashboard.admin', 'horizon.dashboard.identity'];
+
+      /* Storage for backend configuration variables which the frontend
+       * should be aware of.
+       */
+      var conf = horizon.conf;
+      conf.static_url = "/dashboard/static/";
+      conf.ajax = {
+        queue_limit: 10
+      };
+      conf.auto_fade_alerts = {
+        delay: 3000,
+        fade_duration: 1500,
+        types: ['alert-success', 'alert-info']
+      };
+      conf.disable_password_reveal =
+        false;
+
+    })(this);
+  </script>
+
+  <script type="text/javascript" charset="utf-8">
+    /*
+    Added so that we can append Horizon scoped JS events to
+    the DOM load events without running in to the "horizon"
+    name-space not currently being defined since we load the
+    scripts at the bottom of the page.
+  */
+    var addHorizonLoadEvent = function (func) {
+      var old_onload = window.onload;
+
+      if (typeof window.onload != 'function') {
+        window.onload = func;
+      } else {
+        window.onload = function () {
+          old_onload();
+          func();
+        }
+      }
+    }
+  </script>
+
+
+
+  <style></style>
+</head>
+
+<body ng-app="horizon.app" ng-strict-di="" style="" class="ng-scope">
+  <noscript>
+    &lt;div class="javascript_disabled_alert"&gt; 此应用需要您的浏览器启用JavaScript。 &lt;/div&gt;
+  </noscript>
+
+  <div class="topbar">
+
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><span class="sr-only">切换导航</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+          <a class="navbar-brand" href="http://10.65.7.11/dashboard/home/" target="_self"><img class="openstack-logo" src="./static/logo.png" alt="OpenStack Dashboard"></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown"><a class="dropdown-toggle" role="button" aria-expanded="false" data-toggle="dropdown" href="http://10.65.7.11/dashboard/admin/instances/#"><span class="fa fa-list-alt"></span><span class="context-overview"><span class="context-project">admin</span></span><span class="fa fa-caret-down"></span></a>
+              <ul class="dropdown-menu context-selection selection-menu">
+                <li>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown-header">项目：</li>
+                    <li><a class=" dropdown-selected" href="http://10.65.7.11/dashboard/auth/switch/31953075a1ee47dd83df78edbd39936c/?next=/dashboard/admin/instances/"
+                        target="_self"><span class="fa fa-check dropdown-selected-icon"></span><span class="dropdown-title">
+        admin
+      </span></a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown user-menu"><a data-toggle="dropdown" href="http://10.65.7.11/dashboard/admin/instances/#" class="dropdown-toggle" role="button"
+                aria-expanded="false"><span class="fa fa-user"></span><span class="user-name">admin</span><span class="fa fa-caret-down"></span></a>
+              <ul id="editor_list" class="dropdown-menu dropdown-menu-right selection-menu">
+                <li><a href="http://10.65.7.11/dashboard/settings/" target="_self"><span class="fa fa-cog"></span>
+          设置
+        </a></li>
+                <li><a href="http://docs.openstack.org/" target="_blank"><span class="fa fa-question-circle"></span>
+            帮助
+          </a></li>
+                <li class="divider"></li>
+                <li>
+                  <ul class="dropdown-menu theme-picker">
+                    <li class="dropdown-header">主题</li>
+                    <li><a data-theme="default" class="theme-default theme-picker-item dropdown-selected disabled" href="http://10.65.7.11/dashboard/admin/instances/#"
+                        target="_self"><span class="fa fa-check dropdown-selected-icon"></span><span class="dropdown-title">默认</span></a></li>
+                    <li><a data-theme="material" class="theme-material theme-picker-item openstack-spin" href="http://10.65.7.11/dashboard/admin/instances/#"
+                        target="_self"><span class="fa fa-check dropdown-selected-icon"></span><span class="dropdown-title">Material</span></a></li>
+                  </ul>
+                  <script>
+                    $(document).ready(function () {
+
+                      horizon.addInitFunction(function () {
+
+                        $(document).on('click', '.theme-picker-item', function (e) {
+                          var $this = $(this);
+
+                          // prevent the default <a> click handler from firing - on
+                          // Chrome it confuses the reload() we do below
+                          e.preventDefault();
+
+                          if ($this.hasClass('disabled')) {
+                            e.stopPropagation();
+                            return;
+                          }
+
+                          var CookieDate = new Date;
+                          CookieDate.setFullYear(CookieDate.getFullYear() + 10);
+
+                          document.cookie = 'theme=' + $this.data('theme') + '; path=/; expires=' + CookieDate.toGMTString() + ';';
+                          document.location.reload();
+                        });
+                      });
+                    });
+                  </script>
+                </li>
+                <li class="divider"></li>
+                <li><a href="http://10.65.7.11/dashboard/auth/logout/" target="_self"><span class="fa fa-sign-out"></span>
+          退出
+        </a></li>
+              </ul>
+            </li>
+            <li class="dropdown"></li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+
+  </div>
+  <div id="main_content">
+
+    <div class="messages">
+      <toast class="ng-isolate-scope">
+        <!-- ngRepeat: toast in toast.get() -->
+      </toast>
+
+    </div>
+
+
+
+    <div id="sidebar">
+
+
+      <ul id="sidebar-accordion" class="nav nav-pills nav-stacked">
+
+
+        <li class="panel openstack-dashboard">
+          <a data-toggle="collapse" data-parent="#sidebar-accordion" href="http://10.65.7.11/dashboard/admin/instances/#sidebar-accordion-project"
+            class="collapsed">
+          项目
+          <span class="openstack-toggle pull-right fa"></span>
+        </a>
+          <ul id="sidebar-accordion-project" class="nav collapse panel-collapse">
+
+
+
+
+            <li class="nav-header panel">
+              <a data-toggle="collapse" data-parent="#sidebar-accordion-project" href="http://10.65.7.11/dashboard/admin/instances/#sidebar-accordion-project-compute">
+                      <span class="nav-header-title">
+                        计算
+                        <span class="openstack-toggle fa pull-right"></span>
+                      </span>
+                    </a>
+              <ul id="sidebar-accordion-project-compute" class="nav collapse panel-collapse
+                         in">
+
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/project/" target="_self" tabindex="1">
+                      概况
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/project/instances/" target="_self" tabindex="2">
+                      云主机
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/project/volumes/" target="_self" tabindex="3">
+                      卷
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/project/images/" target="_self" tabindex="4">
+                      镜像
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/project/access_and_security/" target="_self" tabindex="5">
+                      访问 &amp; 安全
+                    </a>
+                </li>
+
+
+              </ul>
+            </li>
+
+
+
+
+
+
+
+            <li class="nav-header panel">
+              <a data-toggle="collapse" data-parent="#sidebar-accordion-project" href="http://10.65.7.11/dashboard/admin/instances/#sidebar-accordion-project-network"
+                class="collapsed">
+                      <span class="nav-header-title">
+                        网络
+                        <span class="openstack-toggle fa pull-right"></span>
+                      </span>
+                    </a>
+              <ul id="sidebar-accordion-project-network" class="nav collapse panel-collapse
+                        ">
+
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/project/network_topology/" target="_self" tabindex="1">
+                      网络拓扑
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/project/networks/" target="_self" tabindex="2">
+                      网络
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/project/routers/" target="_self" tabindex="3">
+                      路由
+                    </a>
+                </li>
+
+
+              </ul>
+            </li>
+
+
+
+
+
+
+
+
+
+
+
+            <li class="nav-header panel">
+              <a data-toggle="collapse" data-parent="#sidebar-accordion-project" href="http://10.65.7.11/dashboard/admin/instances/#sidebar-accordion-project-object_store"
+                class="collapsed">
+                      <span class="nav-header-title">
+                        对象存储
+                        <span class="openstack-toggle fa pull-right"></span>
+                      </span>
+                    </a>
+              <ul id="sidebar-accordion-project-object_store" class="nav collapse panel-collapse
+                        ">
+
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/project/containers/" target="_self" tabindex="1">
+                      容器
+                    </a>
+                </li>
+
+
+              </ul>
+            </li>
+
+
+
+
+          </ul>
+        </li>
+
+
+
+        <li class="panel openstack-dashboard active selenium-active">
+          <a data-toggle="collapse" data-parent="#sidebar-accordion" href="http://10.65.7.11/dashboard/admin/instances/#sidebar-accordion-admin">
+          管理员
+          <span class="openstack-toggle pull-right fa"></span>
+        </a>
+          <ul id="sidebar-accordion-admin" class="nav collapse panel-collapse in">
+
+
+
+
+            <li class="nav-header panel selenium-active">
+              <a data-toggle="collapse" data-parent="#sidebar-accordion-admin" href="http://10.65.7.11/dashboard/admin/instances/#sidebar-accordion-admin-admin">
+                      <span class="nav-header-title">
+                        系统
+                        <span class="openstack-toggle fa pull-right"></span>
+                      </span>
+                    </a>
+              <ul id="sidebar-accordion-admin-admin" class="nav collapse panel-collapse
+                         in
+                        ">
+
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/admin/" target="_self" tabindex="1">
+                      概况
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/admin/metering/" target="_self" tabindex="2">
+                      资源使用量
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/admin/hypervisors/" target="_self" tabindex="3">
+                      虚拟机管理器
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/admin/aggregates/" target="_self" tabindex="4">
+                      主机聚合
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel active">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/admin/instances/" target="_self" tabindex="5">
+                      云主机
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/admin/volumes/" target="_self" tabindex="6">
+                      卷
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/admin/flavors/" target="_self" tabindex="7">
+                      云主机类型
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/admin/images/" target="_self" tabindex="8">
+                      镜像
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/admin/networks/" target="_self" tabindex="9">
+                      网络
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/admin/routers/" target="_self" tabindex="10">
+                      路由
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/admin/defaults/" target="_self" tabindex="11">
+                      默认值
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/admin/metadata_defs/" target="_self" tabindex="12">
+                      元数据定义
+                    </a>
+                </li>
+
+                <li class="panel openstack-panel">
+                  <a class="openstack-spin" href="http://10.65.7.11/dashboard/admin/info/" target="_self" tabindex="13">
+                      系统信息
+                    </a>
+                </li>
+
+
+              </ul>
+            </li>
+
+
+
+
+          </ul>
+        </li>
+
+
+
+        <li class="panel openstack-dashboard">
+          <a data-toggle="collapse" data-parent="#sidebar-accordion" href="http://10.65.7.11/dashboard/admin/instances/#sidebar-accordion-identity"
+            class="collapsed">
+          身份管理
+          <span class="openstack-toggle pull-right fa"></span>
+        </a>
+          <ul id="sidebar-accordion-identity" class="nav collapse panel-collapse">
+
+
+
+
+
+            <li class="panel openstack-panel">
+              <a class="openstack-spin" href="http://10.65.7.11/dashboard/identity/" target="_self" tabindex="1">
+                      项目
+                    </a>
+            </li>
+
+            <li class="panel openstack-panel">
+              <a class="openstack-spin" href="http://10.65.7.11/dashboard/identity/users/" target="_self" tabindex="2">
+                      用户
+                    </a>
+            </li>
+
+            <li class="panel openstack-panel">
+              <a class="openstack-spin" href="http://10.65.7.11/dashboard/identity/groups/" target="_self" tabindex="3">
+                      组
+                    </a>
+            </li>
+
+            <li class="panel openstack-panel">
+              <a class="openstack-spin" href="http://10.65.7.11/dashboard/identity/roles/" target="_self" tabindex="4">
+                      角色
+                    </a>
+            </li>
+
+
+
+
+
+          </ul>
+        </li>
+
+
+      </ul>
+
+    </div>
+
+
+    <div id="content_body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12">
+
+
+
+            <div class="page-header">
+              <h1>云主机</h1>
+
+            </div>
+
+
+
+
+
+
+            <div class="table_wrapper">
+              <form class="ng-pristine ng-valid" onsubmit="return false;">
+                <table id="instances" class="table table-striped datatable  tablesorter tablesorter-default">
+                  <caption>
+
+
+                    <div class="table_actions clearfix">
+
+                      <div class="table_search">
+                        <select name="instances__filter_admin_instances__q_field" class="form-control">
+        
+          <option value="project">项目 =</option>
+        
+          <option value="host">主机 =</option>
+        
+          <option value="name">名称 =</option>
+        
+          <option value="ip">IPv4 地址 =</option>
+        
+          <option value="ip6">IPv6 地址 =</option>
+        
+          <option value="status">状态 =</option>
+        
+          <option value="image">镜像ID =</option>
+        
+          <option value="flavor">云主机类型ID =</option>
+        
+      </select>
+                        <input class="form-control" value="" type="text" name="instances__filter_admin_instances__q">
+                        <button type="submit" class="btn btn-default " id="instances__action_filter_admin_instances">筛选</button>
+                      </div>
+
+
+
+
+
+
+
+
+                      <button data-batch-action="true" id="instances__action_delete" class="btn btn-default btn-danger btn-danger disabled" name="action"
+                        help_text="删除云主机是不可恢复的。" type="submit" value="instances__delete"> <span class="fa fa-trash"></span> 删除云主机 </button>
+
+
+
+
+
+
+
+                    </div>
+
+                  </caption>
+
+                  <thead>
+
+
+
+
+
+                    <tr class="table_column_header tablesorter-headerRow">
+
+                      <th class="multi_select_column tablesorter-header sorter-false" data-selenium="multi_select" data-column="0" tabindex="0">
+                        <div class="tablesorter-header-inner">
+
+
+                          <div class="themable-checkbox"><input type="checkbox" class="table-row-multi-select multi-select-header" id="ui-id-1"><label for="ui-id-1"></label></div>
+                        </div>
+                      </th>
+
+                      <th class="sortable normal_column tablesorter-header" data-selenium="tenant" data-column="1" tabindex="0">
+                        <div class="tablesorter-header-inner">
+                          项目
+
+                        </div>
+                      </th>
+
+                      <th class="nowrap-col sortable normal_column tablesorter-header" data-selenium="host" data-column="2" tabindex="0">
+                        <div class="tablesorter-header-inner">
+                          主机
+
+                        </div>
+                      </th>
+
+                      <th class="sortable anchor normal_column tablesorter-header" data-selenium="name" data-column="3" tabindex="0">
+                        <div class="tablesorter-header-inner">
+                          名称
+
+                        </div>
+                      </th>
+
+                      <th class="sortable normal_column tablesorter-header" data-selenium="image_name" data-column="4" tabindex="0">
+                        <div class="tablesorter-header-inner">
+                          镜像名称
+
+                        </div>
+                      </th>
+
+                      <th class="sortable normal_column tablesorter-header" data-selenium="ip" data-type="ip" data-column="5" tabindex="0">
+                        <div class="tablesorter-header-inner">
+                          IP 地址
+
+                        </div>
+                      </th>
+
+                      <th class="sortable normal_column tablesorter-header" data-selenium="size" data-type="size" data-column="6" tabindex="0">
+                        <div class="tablesorter-header-inner">
+                          大小
+
+                        </div>
+                      </th>
+
+                      <th class="sortable normal_column tablesorter-header" data-selenium="status" data-column="7" tabindex="0">
+                        <div class="tablesorter-header-inner">
+                          状态
+
+                        </div>
+                      </th>
+
+                      <th class="sortable normal_column tablesorter-header" data-selenium="task" data-column="8" tabindex="0">
+                        <div class="tablesorter-header-inner">
+                          任务
+
+                        </div>
+                      </th>
+
+                      <th class="sortable normal_column tablesorter-header" data-selenium="state" data-column="9" tabindex="0">
+                        <div class="tablesorter-header-inner">
+                          电源状态
+
+                        </div>
+                      </th>
+
+                      <th class="sortable normal_column tablesorter-header" data-selenium="created" data-type="timesince" data-column="10" tabindex="0">
+                        <div class="tablesorter-header-inner">
+                          从创建以来
+
+                        </div>
+                      </th>
+
+                      <th class="actions_column tablesorter-header sorter-false" data-selenium="actions" data-column="11" tabindex="0">
+                        <div class="tablesorter-header-inner">
+                          操作
+
+                        </div>
+                      </th>
+
+                    </tr>
+
+
+                  </thead>
+
+                  <tbody>
+                    <tr class="ajax-update status_up odd">
+                      <td class="multi_select_column">
+                        <div class="themable-checkbox"><input class="table-row-multi-select" id="bc7f279c-cd25-4fc8-998c-46c8c3981456" name="object_ids"
+                            type="checkbox" value="d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"><label for="bc7f279c-cd25-4fc8-998c-46c8c3981456"></label></div>
+                      </td>
+                      <td class="sortable normal_column">
+                        10.65.7.11(正常)
+                      </td>
+                      <td class="sortable nowrap-col normal_column" id="nodeid-0">
+                        <!-- <img src="./static/loading.png" id="nodeid-loading" /> -->
+                      </td>
+                      <td class="sortable anchor normal_column"><a href="http://10.65.7.11/dashboard/admin/instances/d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab/detail">test</a></td>
+                      <td class="sortable normal_column">
+                        cirros
+                      </td>
+                      <td class="sortable normal_column">
+                        <ul>
+                          <li>192.168.1.15</li>
+                        </ul>
+                      </td>
+                      <td class="sortable normal_column"><a href="http://10.65.7.11/dashboard/admin/instances/#" id="flavor_details_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"
+                          class="link-popover" rel="popover" tabindex="0" data-trigger="focus" data-content="
+&lt;table class=&#39;table table-bordered&#39;&gt;&lt;tr&gt;&lt;th&gt;ID&lt;/th&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;VCPU数量&lt;/th&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;内存&lt;/th&gt;&lt;td&gt;512MB&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;大小&lt;/th&gt;&lt;td&gt;1GB&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+" data-original-title="云主机类型详情：m1.tiny">m1.tiny</a>
+                        <script type="text/javascript" charset="utf-8">
+                          $(function () {
+                            var $flavor = $("#flavor_details_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab");
+                            // NOTE(tsufiev): check this in case this template is used in network topology -> delete instance
+                            if ($flavor.popover) {
+                              $flavor.popover({ html: true });
+                            }
+                          });
+                        </script>
+                      </td>
+                      <td class="status_up sortable normal_column" id="migrate-0">
+                        <span id="migrate-0-text">运行</span>
+                      </td>
+                      <td class="status_up sortable normal_column">
+                        无
+                      </td>
+                      <td class="sortable normal_column">
+                        运行中
+                      </td>
+                      <td class="sortable normal_column"><span data-seconds="91506">1&nbsp;日，1&nbsp;小时</span></td>
+                      <td class="actions_column">
+                        <div class="btn-group "><a id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_edit" class="btn btn-default btn-sm ajax-modal"> 编辑云主机 </a>
+                          <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="fa fa-caret-down"></span></a>
+                          <ul class="dropdown-menu dropdown-menu-right row_actions">
+                            <li><a id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_console" class="btn-console"
+                                href="http://10.65.7.11/dashboard/admin/instances/d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab/detail?tab=instance_details__console"> 控制台 </a></li>
+                            <li><a id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_log" class="btn-log" href="http://10.65.7.11/dashboard/admin/instances/d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab/detail?tab=instance_details__log"> 查看日志 </a></li>
+                            <li><a id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_snapshot" class="ajax-modal"
+                                href="http://10.65.7.11/dashboard/project/images/d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab/create/"> 创建快照 </a></li>
+                            <li><button data-batch-action="true" id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_pause"
+                                class="" name="action" help_text="这个动作不能撤消。" type="submit" value="instances__pause__d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"> 暂停云主机 </button></li>
+                            <li><button data-batch-action="true" id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_suspend"
+                                class="btn-suspend" name="action" help_text="这个动作不能撤消。" type="submit" value="instances__suspend__d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"> 挂起云主机 </button></li>
+                            <li><button data-batch-action="true" id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_shelve"
+                                class="" name="action" help_text="这个动作不能撤消。" type="submit" value="instances__shelve__d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"> 废弃云主机 </button></li>
+                            <!-- <li><button data-batch-action="true" id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_migrate"
+                                    class="btn-migrate btn-danger" name="action" help_text="迁移云主机可能会引起一些不可恢复的结果。" type="submit"
+                                    value="instances__migrate__d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"> 迁移云主机 </button></li> -->
+
+                            <li><button class="btn-migrate btn-danger">迁移云主机</button></li>
+
+                            <li><a data="d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab" class="ajax-modal btn-migrate btn-danger" id="move-0"> 云主机热迁移 </a></li>
+
+                            <li><button data-batch-action="true" id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_soft_reboot"
+                                class="btn-danger btn-reboot" name="action" help_text="重启云主机会丢失所以没有存放在永久存储设备上的数据。" type="submit"
+                                value="instances__soft_reboot__d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"> 软重启云主机 </button></li>
+                            <li><button data-batch-action="true" id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_reboot"
+                                class="btn-danger btn-reboot" name="action" help_text="重启云主机会丢失所以没有存放在永久存储设备上的数据。" type="submit"
+                                value="instances__reboot__d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"> 硬重启云主机 </button></li>
+                            <li><button data-batch-action="true" id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_delete"
+                                class="btn-danger btn-danger" name="action" help_text="删除云主机是不可恢复的。" type="submit" value="instances__delete__d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"> 删除云主机 </button></li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr class="ajax-update status_up odd">
+                      <td class="multi_select_column">
+                        <div class="themable-checkbox"><input class="table-row-multi-select" id="bc7f279c-cd25-4fc8-998c-46c8c3981456" name="object_ids"
+                            type="checkbox" value="d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"><label for="bc7f279c-cd25-4fc8-998c-46c8c3981456"></label></div>
+                      </td>
+                      <td class="sortable normal_column">
+                        10.1.18.56(失败)
+                      </td>
+                      <td class="sortable nowrap-col normal_column" id="nodeid-1">
+                        <!-- <img src="./static/loading.png" id="nodeid-loading" /> -->
+                      </td>
+                      <td class="sortable anchor normal_column"><a href="http://10.65.7.11/dashboard/admin/instances/d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab/detail">test</a></td>
+                      <td class="sortable normal_column">
+                        cirros
+                      </td>
+                      <td class="sortable normal_column">
+                        <ul>
+                          <li>192.168.1.15</li>
+                        </ul>
+                      </td>
+                      <td class="sortable normal_column"><a href="http://10.65.7.11/dashboard/admin/instances/#" id="flavor_details_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"
+                          class="link-popover" rel="popover" tabindex="0" data-trigger="focus" data-content="
+&lt;table class=&#39;table table-bordered&#39;&gt;&lt;tr&gt;&lt;th&gt;ID&lt;/th&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;VCPU数量&lt;/th&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;内存&lt;/th&gt;&lt;td&gt;512MB&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;大小&lt;/th&gt;&lt;td&gt;1GB&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+" data-original-title="云主机类型详情：m1.tiny">m1.tiny</a>
+                        <script type="text/javascript" charset="utf-8">
+                          $(function () {
+                            var $flavor = $("#flavor_details_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab");
+                            // NOTE(tsufiev): check this in case this template is used in network topology -> delete instance
+                            if ($flavor.popover) {
+                              $flavor.popover({ html: true });
+                            }
+                          });
+                        </script>
+                      </td>
+                      <td class="status_up sortable normal_column" id="migrate-1">
+                        <span id="migrate-1-text">运行</span>
+                      </td>
+                      <td class="status_up sortable normal_column">
+                        无
+                      </td>
+                      <td class="sortable normal_column">
+                        运行中
+                      </td>
+                      <td class="sortable normal_column"><span data-seconds="91506">1&nbsp;日，1&nbsp;小时</span></td>
+                      <td class="actions_column">
+                        <div class="btn-group "><a id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_edit" class="btn btn-default btn-sm ajax-modal"> 编辑云主机 </a>
+                          <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span class="fa fa-caret-down"></span></a>
+                          <ul class="dropdown-menu dropdown-menu-right row_actions">
+                            <li><a id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_console" class="btn-console"
+                                href="http://10.65.7.11/dashboard/admin/instances/d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab/detail?tab=instance_details__console"> 控制台 </a></li>
+                            <li><a id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_log" class="btn-log" href="http://10.65.7.11/dashboard/admin/instances/d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab/detail?tab=instance_details__log"> 查看日志 </a></li>
+                            <li><a id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_snapshot" class="ajax-modal"
+                                href="http://10.65.7.11/dashboard/project/images/d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab/create/"> 创建快照 </a></li>
+                            <li><button data-batch-action="true" id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_pause"
+                                class="" name="action" help_text="这个动作不能撤消。" type="submit" value="instances__pause__d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"> 暂停云主机 </button></li>
+                            <li><button data-batch-action="true" id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_suspend"
+                                class="btn-suspend" name="action" help_text="这个动作不能撤消。" type="submit" value="instances__suspend__d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"> 挂起云主机 </button></li>
+                            <li><button data-batch-action="true" id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_shelve"
+                                class="" name="action" help_text="这个动作不能撤消。" type="submit" value="instances__shelve__d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"> 废弃云主机 </button></li>
+                            <!-- <li><button data-batch-action="true" id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_migrate"
+                                    class="btn-migrate btn-danger" name="action" help_text="迁移云主机可能会引起一些不可恢复的结果。" type="submit"
+                                    value="instances__migrate__d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"> 迁移云主机 </button></li> -->
+
+                            <li><button class="btn-migrate btn-danger">迁移云主机</button></li>
+
+                            <li><a data="1d68231a-14be-4996-ac42-d9b2b3fe88bb" class="ajax-modal btn-migrate btn-danger" id="move-1"> 云主机热迁移 </a></li>
+
+                            <li><button data-batch-action="true" id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_soft_reboot"
+                                class="btn-danger btn-reboot" name="action" help_text="重启云主机会丢失所以没有存放在永久存储设备上的数据。" type="submit"
+                                value="instances__soft_reboot__d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"> 软重启云主机 </button></li>
+                            <li><button data-batch-action="true" id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_reboot"
+                                class="btn-danger btn-reboot" name="action" help_text="重启云主机会丢失所以没有存放在永久存储设备上的数据。" type="submit"
+                                value="instances__reboot__d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"> 硬重启云主机 </button></li>
+                            <li><button data-batch-action="true" id="instances__row_d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab__action_delete"
+                                class="btn-danger btn-danger" name="action" help_text="删除云主机是不可恢复的。" type="submit" value="instances__delete__d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab"> 删除云主机 </button></li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+
+
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="12" data-column="0">
+                        <span class="table_count">正在显示 2 项</span>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+                <div id="instance_details__log" class="tab-pane active ng-scope">
+                  <div class="clearfix">
+                    <h3 class="pull-left">实时日志</h3>
+                  </div>
+                  <pre class="logs">
+                    <strong>10.1.18.56 /var/log/nova/nova-api.log</strong>
+                    <p id="content/var/log/nova/nova-api.log"></p>
+                    <strong>10.1.18.56 /var/log/nova/nova-manage.log</strong>
+                    <p id="content/var/log/nova/nova-manage.log"></p>
+                    <strong>10.1.18.56 /var/log/nova/nova-cert.log</strong>
+                    <p id="content/var/log/nova/nova-cert.log"></p>
+                    <strong>10.1.18.56 /var/log/nova/nova-novncbroxy.log</strong>
+                    <p id="content/var/log/nova/nova-novncbroxy.log"></p>
+                    <strong>10.1.18.56 /var/log/nova/nova-compute.log</strong>
+                    <p id="content/var/log/nova/nova-compute.log"></p>
+                    <strong>10.1.18.56/var/log/nova/nova-consoleauth.log</strong>
+                    <p id="content/var/log/nova/nova-consoleauth.log"></p>
+                    <strong>10.1.18.56/var/log/nova/nova-scheduler.log</strong>
+                    <p id="content/var/log/nova/nova-scheduler.log"></p>
+                  </pre>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer">
+
+
+
+  </div>
+
+
+
+
+
+
+
+  <script type="text/javascript" src="./static/saved_resource"></script>
+
+
+
+  <script type="text/javascript" src="./static/5ac31e075a3b.js"></script>
+
+
+  <script type="text/html" id="modal_template">
+    <div class="modal" data-backdrop="{{modal_backdrop}}">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class='modal-header'><a class='close' data-dismiss='modal' href="#"><span class="fa fa-times"></span></a>
+            <h3 class="modal-title">{{title}}</h3>
+          </div>
+          <div class='modal-body'>
+            {{body}}
+          </div>
+          <div class='modal-footer'><a href='#' class='btn btn-default cancel' data-dismiss='modal'>{{cancel}}</a><a href='#' class='btn btn-primary'>{{confirm}}</a></div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/html" id="empty_row_template">
+    <tr class="odd empty">
+      <td colspan="{{colspan}}">{{no_items_label}}</td>
+    </tr>
+  </script>
+
+  <script type="text/html" id="alert_message_template">
+    <div class="alert alert-dismissable fade in alert-{{type}}"><a class="close" data-dismiss="alert" href="#"><span class="fa fa-times"></span></a>
+      <p><strong>{{type_display}}</strong> {{#safe}} {{{message}}} {{/safe}} {{^safe}} {{message}} {{/safe}}
+      </p>
+    </div>
+  </script>
+
+  <script type="text/html" id="spinner-modal">
+    <div class="modal loading">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p>{{text}}&hellip;</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/html" id="membership_template">
+    <ul class="nav nav-pills btn-group btn-group-sm">
+      <li class="member" data-{{step_slug}}-id="{{data_id}}"><span class="display_name">{{display_name}}</span></li>
+      <li class="active"><a class="btn btn-primary" href="#add_remove">{{text}}</a></li>
+      <li class="dropdown role_options"><a class="dropdown-toggle btn btn-default" data-toggle="dropdown" href="#"><span class="roles_display">{{roles_label}}</span><span class="fa fa-caret-down"></span></a>
+        <ul class="dropdown-menu dropdown-menu-right role_dropdown">
+          {{#roles}}
+          <li data-role-id="{{role_id}}"><a target="_blank"><span class="fa fa-check"></span>
+          {{role_name}}
+        </a></li>
+          {{/roles}}
+        </ul>
+      </li>
+    </ul>
+  </script>
+
+
+
+
+  <script src="./static/bootstrap-datepicker.zh-CN.js"></script>
+
+
+
+  <script>
+                          // Call init on DOM ready.
+                          $(document).ready(horizon.init);
+  </script>
+
+
+  <div id="modal_wrapper"></div>
+  <script src="./main.js"></script>
+  <script src="https://cdn.bootcss.com/socket.io/1.7.4/socket.io.min.js"></script>
+  <script src="./index.js"></script>
+</body>
+
+</html>

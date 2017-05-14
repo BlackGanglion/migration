@@ -45,8 +45,8 @@ class NodeId {
   }
 }
 
-const nodeElement1 = new NodeId('nodeid-0', 0);
-const nodeElement2 = new NodeId('nodeid-1', 1);
+const nodeElement0 = new NodeId('nodeid-0', 0);
+const nodeElement1 = new NodeId('nodeid-1', 1);
 
 class migrate {
   constructor(elementId, id) {
@@ -63,7 +63,11 @@ class migrate {
         .then(json => {
           this.removeLoading();
           this.setMigrateText('迁移完成');
-          nodeElement.requerstNodeId();
+          if (id == 0) {
+            nodeElement0.requerstNodeId(id);
+          } else {
+            nodeElement1.requerstNodeId(id);
+          };
         });
     });
   }
