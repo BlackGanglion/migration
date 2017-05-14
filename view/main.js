@@ -1,13 +1,14 @@
 class NodeId {
-  constructor() {
+  constructor(elementId, id) {
+    this.id = elementId;
     this.text = null;
-    this.requerstNodeId();
+    this.requerstNodeId(id);
   }
 
-  requerstNodeId() {
+  requerstNodeId(id) {
     this.setNodeID('获取中');
     this.addLoaaing();
-    return fetch('http://127.0.0.1:3000/getNodeID')
+    return fetch(`http://127.0.0.1:3000/getNodeID?id=${id}`)
       .then(response => response.json())
       .then(json => {
         this.setNodeID(json.nodeId);
@@ -17,45 +18,47 @@ class NodeId {
 
   addLoaaing() {
     const loadingImg = document.createElement("img");
-    loadingImg.id = "nodeid-loading";
+    loadingImg.id = this.id + "-loading";
     loadingImg.src = "./static/loading.png";
-    $('#nodeid')[0].appendChild(loadingImg);
+    $('#' + this.id)[0].appendChild(loadingImg);
   }
 
   removeLoading() {
-    $('#nodeid-loading').remove();
+    $('#' + this.id + "-loading").remove();
   }
 
   getNodeID() {
-    return $('#nodeid-text').text();
+    return $('#' + this.id + "-text").text();
   }
 
   setNodeID(nodeId) {
     if (this.text) this.removeNodeID();
 
     this.text = document.createElement("span");
-    this.text.id = "nodeid-text";
+    this.text.id = this.id + "-text";
     this.text.textContent = nodeId;
-    $('#nodeid')[0].appendChild(this.text);
+    $('#' + this.id)[0].appendChild(this.text);
   }
   
   removeNodeID() {
-    $('#nodeid-text').remove();
+    $('#' + this.id + "-text").remove();
   }
 }
 
-const nodeElement = new NodeId();
+const nodeElement1 = new NodeId('nodeid-0', 0);
+const nodeElement2 = new NodeId('nodeid-1', 1);
 
 class migrate {
-  constructor() {
-    this.listenButton();
+  constructor(elementId, id) {
+    this.id = elementId;
+    this.listenButton(id);
   }
 
-  listenButton() {
-    $('#move').on('click', () => {
+  listenButton(id) {
+    $('#move-' + id).on('click', () => {
       this.addLoading();
       this.setMigrateText('迁移中');
-      fetch(`http://127.0.0.1:3000/migrate`)
+      fetch(`http://127.0.0.1:3000/migrate?id=${id}`)
         .then(response => response.json())
         .then(json => {
           this.removeLoading();
@@ -67,19 +70,19 @@ class migrate {
 
   addLoading() {
     const loadingImg = document.createElement("img");
-    loadingImg.id = "migrate-loading";
+    loadingImg.id = this.id + "-loading";
     loadingImg.src = "./static/loading.png";
-    $('#status')[0].appendChild(loadingImg);
+    $('#' + this.id)[0].appendChild(loadingImg);
   }
 
   removeLoading() {
-    $('#migrate-loading').remove();
+    $('#' + this.id + '-loading').remove();
   }
 
   setMigrateText(text) {
-    $('#migrate-text').text(text);
+    $('#' + this.id + '-text').text(text);
   }
 }
 
-const migrateElement = new migrate();
-
+const migrateElement1 = new migrate('migrate-0', 0);
+const migrateElement2 = new migrate('migrate-1', 1);

@@ -16,8 +16,11 @@
   }
 }
 
-#nodeid-loading,
-#migrate-loading {
+
+#nodeid-0-loading,
+#nodeid-1-loading,
+#migrate-0-loading,
+#migrate-1-loading {
   animation: transform 4s linear 0s infinite
 }
 

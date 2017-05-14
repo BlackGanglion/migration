@@ -1,5 +1,4 @@
 var Client = require('ssh2').Client;
-var conn = new Client();
 
 const nodeRegex = /node\d?/g;
 const nodeCommand = 'source admin_rc && nova show d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab | grep \'OS-EXT-SRV-ATTR:host\'';
@@ -11,7 +10,7 @@ const server = [
     port: 22,
     host: '10.65.7.11',
     password: 'cloud305'
-  }
+  },
   // 错误测试机
   {
     user: 'root',
@@ -19,43 +18,57 @@ const server = [
     host: '10.1.18.56',
     password: 'centos'
   }
-]
+];
 
-const connect = () => {
+const nodeCommandList = [
+  'source admin_rc && nova show d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab | grep \'OS-EXT-SRV-ATTR:host\'',
+  'source admin_rc && nova show 1d68231a-14be-4996-ac42-d9b2b3fe88bb | grep \'OS-EXT-SRV-ATTR:host\'',
+];
+
+function command(id, nodeID) {
+  if (id == 0) {
+    return 'source admin_rc && nova live-migration d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab '
+      + (nodeID === 'node8' ? 'node4' : 'node8');
+  } else {
+    return 'source admin_rc && nova live-migration 1d68231a-14be-4996-ac42-d9b2b3fe88bb '
+      + (nodeID === 'node8' ? 'node4' : 'node8');
+  }
+}
+        
+
+const connect = (id) => {
+  var conn = new Client();
   return new Promise((resolve, reject) => {
     conn.on('ready', function() {
-      resolve();
-    }).connect(server[1]);
+      resolve(conn);
+    }).connect(server[id]);
   });
 }
 
-const getNode = () => {
+const getNode = (conn, id) => {
   return new Promise((resolve, reject) => {
-    conn.exec(nodeCommand, function(err, stream) {
+    conn.exec(nodeCommandList[id], function(err, stream) {
       if (err) {
         reject(err);
       }
       stream.on('data', function(data) {
         const filter = data.toString().replace(/\s/g, "");
+        console.log(nodeCommandList[id], filter);
         const nodeID = filter.match(nodeRegex)[0];
         console.log(filter, nodeID);
         resolve(nodeID);
       }).stderr.on('data', function(err) {
-        console.log(err);
-        reject(data);
+        console.log(err.toString());
+        reject(err);
       });
     });
   });
 }
 
-const submitMigration = (nodeID) => {
+const submitMigration = (conn, nodeID, id) => {
   return new Promise((resolve, reject) => {
-    const command = 
-        'source admin_rc && nova live-migration d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab ' 
-        + (nodeID === 'node8' ? 'node4' : 'node8');
-
     console.log(command);
-    conn.exec(command, function(err, stream) {
+    conn.exec(command(id, nodeID), function(err, stream) {
         if (err) {
           console.log('command: ' + err.toString());
           conn.end();
@@ -75,16 +88,16 @@ const submitMigration = (nodeID) => {
 }
 
 let handler;
-const getNodeByTurn = (nodeID, resolve) => {
+const getNodeByTurn = (conn, nodeID, resolve, id) => {
   console.log('getNodeByTurn: ' + nodeID);
   const func = () => {
-    getNode().then((newNodeID) => {
+    getNode(conn, id).then((newNodeID) => {
       console.log(newNodeID, nodeID);
       if (newNodeID !== nodeID) {
         resolve();
         conn.end();
       } else {
-        getNodeByTurn(nodeID, resolve);
+        getNodeByTurn(conn, nodeID, resolve, id);
       }
     });
   };
@@ -93,26 +106,22 @@ const getNodeByTurn = (nodeID, resolve) => {
   handler = setTimeout(func, 0);
 } 
 
-/*
-
-*/
-
-exports.migrate = () => {
+exports.migrate = (id) => {
   return new Promise((resolve, reject) => {
-    connect().then(() => {
-      getNode().then((nodeID) => {
-        submitMigration(nodeID).then(() => {
-          getNodeByTurn(nodeID, resolve);
+    connect(id).then((conn) => {
+      getNode(conn, id).then((nodeID) => {
+        submitMigration(conn, nodeID, id).then(() => {
+          getNodeByTurn(conn, nodeID, resolve, id);
         });
       });
     });
   });
 }
 
-exports.getNodeCurrent = () => {
+exports.getNodeCurrent = (id) => {
   return new Promise((resolve, reject) => {
-    connect().then(() => {
-      getNode().then((nodeID) => {
+    connect(id).then((conn) => {
+      getNode(conn, id).then((nodeID) => {
         resolve(nodeID);
       })
     });

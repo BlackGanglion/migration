@@ -17,13 +17,15 @@ app.get('/', function (req, res) {
 });
 
 app.get('/getNodeID', function (req, res) {
-  getNodeCurrent().then((nodeId) => {
+  const { id } = req.query;
+  getNodeCurrent(id).then((nodeId) => {
     res.json({ nodeId });
   });
 });
 
 app.get('/migrate', function (req, res) {
-  migrate().then(() => {
+  const { id } = req.query;
+  migrate(id).then(() => {
     res.json({});
   });
 });
