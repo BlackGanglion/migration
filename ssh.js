@@ -93,23 +93,23 @@ const submitMigration = (conn, nodeID, id) => {
 let handler;
 const getNodeByTurn = (conn, nodeID, resolve, id, count) => {
   console.log('getNodeByTurn: ' + nodeID);
-  const func = () => {
+  const func = (n) => {
     getNode(conn, id).then((newNodeID) => {
-      console.log(newNodeID, nodeID);
+      console.log(newNodeID, nodeID, n);
       if (newNodeID !== nodeID) {
         resolve();
         conn.end();
       } else {
-        if (count === 163 * 1000 / 100) {
+        if (n === 10) {
           reject();
         }
-        getNodeByTurn(conn, nodeID, resolve, id, count + 1);
+        getNodeByTurn(conn, nodeID, resolve, id, n + 1);
       }
     });
   };
 
   if (handler) clearTimeout(handler);
-  handler = setTimeout(func, 100);
+  handler = setTimeout(func.bind(this, count), 100);
 } 
 
 /**
