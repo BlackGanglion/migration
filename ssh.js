@@ -22,7 +22,7 @@ const server = [
 
 const nodeCommandList = [
   'source admin_rc && nova show d43f0c8f-e1f6-4ea0-86f1-7fc3010fe0ab | grep \'OS-EXT-SRV-ATTR:host\'',
-  'source admin_rc && nova show 1d68231a-14be-4996-ac42-d9b2b3fe88bb | grep \'OS-EXT-SRV-ATTR:host\'',
+  'source admin_rc && nova show 4ffda339-43b5-4e53-be6f-a83a55402e81 | grep \'OS-EXT-SRV-ATTR:host\'',
 ];
 
 function command(id, nodeID) {
@@ -35,7 +35,10 @@ function command(id, nodeID) {
   }
 }
         
-
+/**
+ * 连接ssh
+ * @param {*} id node编号 
+ */
 const connect = (id) => {
   var conn = new Client();
   return new Promise((resolve, reject) => {
@@ -106,6 +109,9 @@ const getNodeByTurn = (conn, nodeID, resolve, id) => {
   handler = setTimeout(func, 0);
 } 
 
+/**
+ * 迁移
+ */
 exports.migrate = (id) => {
   return new Promise((resolve, reject) => {
     connect(id).then((conn) => {
@@ -118,6 +124,9 @@ exports.migrate = (id) => {
   });
 }
 
+/**
+ * 获取nodeID
+ */
 exports.getNodeCurrent = (id) => {
   return new Promise((resolve, reject) => {
     connect(id).then((conn) => {

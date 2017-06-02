@@ -16,6 +16,9 @@ app.get('/', function (req, res) {
   res.sendfile(__dirname + '/view/index.html');
 });
 
+/**
+ * 得到 nodeID / node4, node8
+ */
 app.get('/getNodeID', function (req, res) {
   const { id } = req.query;
   getNodeCurrent(id).then((nodeId) => {
@@ -23,6 +26,9 @@ app.get('/getNodeID', function (req, res) {
   });
 });
 
+/**
+ * 迁移接口，输入 id 完成迁移
+ */
 app.get('/migrate', function (req, res) {
   const { id } = req.query;
   migrate(id).then(() => {
