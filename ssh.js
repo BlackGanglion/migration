@@ -121,9 +121,9 @@ exports.migrate = (id) => {
       getNode(conn, id).then((nodeID) => {
         submitMigration(conn, nodeID, id).then(() => {
           getNodeByTurn(conn, nodeID, resolve, id, 0);
-        });
-      });
-    });
+        }, reject);
+      }, reject);
+    }, reject);
   });
 }
 
