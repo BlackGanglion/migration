@@ -45,7 +45,7 @@ for (let i = 0; i < logMap.length; i++) {
     var para = document.createElement("div");
     var text = keyLightRecursion(
       data, 
-      ['ERROR', 'error', 'CRITICAL', 'critical', 'TRACE', 'trace'], 
+      ['ERROR', 'error', 'CRITICAL', 'critical', 'TRACE', 'trace', 'WARNING'], 
       'highlight'
     );
     console.log(para, text);

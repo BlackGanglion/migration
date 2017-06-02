@@ -91,7 +91,7 @@ const submitMigration = (conn, nodeID, id) => {
 }
 
 let handler;
-const getNodeByTurn = (conn, nodeID, resolve, id) => {
+const getNodeByTurn = (conn, nodeID, resolve, id, count) => {
   console.log('getNodeByTurn: ' + nodeID);
   const func = () => {
     getNode(conn, id).then((newNodeID) => {
@@ -100,13 +100,16 @@ const getNodeByTurn = (conn, nodeID, resolve, id) => {
         resolve();
         conn.end();
       } else {
-        getNodeByTurn(conn, nodeID, resolve, id);
+        if (count === 163 * 1000 / 100) {
+          reject();
+        }
+        getNodeByTurn(conn, nodeID, resolve, id, count + 1);
       }
     });
   };
 
   if (handler) clearTimeout(handler);
-  handler = setTimeout(func, 0);
+  handler = setTimeout(func, 100);
 } 
 
 /**
@@ -117,7 +120,7 @@ exports.migrate = (id) => {
     connect(id).then((conn) => {
       getNode(conn, id).then((nodeID) => {
         submitMigration(conn, nodeID, id).then(() => {
-          getNodeByTurn(conn, nodeID, resolve, id);
+          getNodeByTurn(conn, nodeID, resolve, id, 0);
         });
       });
     });

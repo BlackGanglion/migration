@@ -39,7 +39,7 @@ class NodeId {
     this.text.textContent = nodeId;
     $('#' + this.id)[0].appendChild(this.text);
   }
-  
+
   removeNodeID() {
     $('#' + this.id + "-text").remove();
   }
@@ -62,12 +62,16 @@ class migrate {
         .then(response => response.json())
         .then(json => {
           this.removeLoading();
-          this.setMigrateText('迁移完成');
-          if (id == 0) {
-            nodeElement0.requerstNodeId(id);
+          if (json.res == 'success') {
+            this.setMigrateText('迁移完成');
+            if (id == 0) {
+              nodeElement0.requerstNodeId(id);
+            } else {
+              nodeElement1.requerstNodeId(id);
+            };
           } else {
-            nodeElement1.requerstNodeId(id);
-          };
+            this.setMigrateText('迁移失败');
+          } 
         });
     });
   }

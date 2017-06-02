@@ -32,7 +32,13 @@ app.get('/getNodeID', function (req, res) {
 app.get('/migrate', function (req, res) {
   const { id } = req.query;
   migrate(id).then(() => {
-    res.json({});
+    res.json({
+      res: 'success',
+    });
+  }, () => {
+    res.json({
+      res: 'error',
+    });
   });
 });
 
